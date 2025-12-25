@@ -2,9 +2,9 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className='bg-black text-white py-12 px-8'>
+    <footer className='bg-black text-white py-8 md:py-12 px-4 md:px-8'>
       <div className='max-w-6xl mx-auto'>
-        <div className='grid md:grid-cols-2 gap-8 mb-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8'>
           <div>
             <h3 className='text-2xl font-bold mb-4'>Residency</h3>
             <p className='text-gray-300 leading-relaxed'>
@@ -39,8 +39,8 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className='border-t border-gray-800 pt-6'>
-          <p className='text-center text-gray-400'>
+        <div className='border-t border-gray-800 pt-4 md:pt-6'>
+          <p className='text-center text-gray-400 text-sm md:text-base'>
             © 2025 Residency. All rights reserved.
           </p>
         </div>
