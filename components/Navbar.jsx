@@ -53,7 +53,7 @@ const Navbar = () => {
   const handleHomeClick = () => {
     router.push('/')
   }
-  
+   
   return (
     <nav className='fixed top-0 left-0 right-0 z-50 '>
       <div className='max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between'>
