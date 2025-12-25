@@ -1,10 +1,19 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
 import bgimg from '../assets/img2.png'
+import { useNavbar } from '../contexts/NavbarContext'
+
 const UBExplore = () => {
+  const { setIsDarkBackground } = useNavbar()
+  
+  useEffect(() => {
+    setIsDarkBackground(false)
+  }, [])
+  
   return (
     <div className='w-full py-16 px-8 bg-white'>
+
       <div className='max-w-6xl mx-auto'>
         <div className='grid md:grid-cols-2 gap-16 items-center'>
           <div className='space-y-6'>
@@ -23,26 +32,6 @@ const UBExplore = () => {
           <div className='relative flex justify-center'>
             <div className='relative h-130 w-full overflow-hidden'>
               <div className='absolute inset-0 flex items-center justify-center'>
-                {/* <span
-                  className="select-none"
-                  style={{
-                    fontSize: '400px',
-                    fontWeight: 900,          // maximum boldness
-                    letterSpacing: '-0.14em',
-                    backgroundImage:
-                      'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80)',
-                    backgroundSize: 'cover',
-                    backgroundSize: '1200px auto',
-                    backgroundPosition: 'left center',
-
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
-                  UB
-                </span> */}
                 <Image
                   src={bgimg}
                   alt="Background Image"

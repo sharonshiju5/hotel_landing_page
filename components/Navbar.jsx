@@ -1,25 +1,112 @@
 'use client'
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { useNavbar } from '../contexts/NavbarContext'
 
 const Navbar = () => {
+  const [isRoomDropdownOpen, setIsRoomDropdownOpen] = useState(false)
+  const [isOverHomepage, setIsOverHomepage] = useState(true)
+  const { isDarkBackground } = useNavbar()
+  const dropdownRef = useRef(null)
+  const router = useRouter()
+  
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
+  
+  useEffect(() => {
+    if (!isHomePage) return
+    
+    const handleScroll = () => {
+      const homepageElement = document.querySelector('[data-component="homepage"]')
+      if (homepageElement) {
+        const rect = homepageElement.getBoundingClientRect()
+        setIsOverHomepage(rect.bottom > 0)
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Check initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isHomePage])
+  
+  const textColor = (isHomePage && isOverHomepage) ? 'text-white' : 'text-black'
+  const hoverColor = (isHomePage && isOverHomepage) ? 'hover:text-gray-300' : 'hover:text-gray-600'
+  const buttonBg = (isHomePage && isOverHomepage) ? 'bg-white' : 'bg-black'
+  const buttonText = (isHomePage && isOverHomepage) ? 'text-black' : 'text-white'
+  const buttonHover = (isHomePage && isOverHomepage) ? 'hover:bg-gray-100' : 'hover:bg-gray-800'
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsRoomDropdownOpen(false)
+      }
+    }
+    
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+  
+  const handleHomeClick = () => {
+    router.push('/')
+  }
+  
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm'>
-      <div className='max-w-6xl mx-auto px-6 py-4 flex items-center justify-between'>
-        <div className='flex items-center gap-3'>
-          <div className='w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center'>
-            <svg className='w-6 h-6 text-white' fill='currentColor' viewBox='0 0 24 24'>
-              <path d='M12 2L2 7v10c0 5.55 3.84 10 9 11 1.09-.21 2.28-.71 3.5-1.5 1.22.79 2.41 1.29 3.5 1.5 5.16-1 9-5.45 9-11V7l-10-5z'/>
-            </svg>
-          </div>
-          <h1 className='text-2xl font-bold text-white'>UB Residency</h1>
+    <nav className='fixed top-0 left-0 right-0 z-50 '>
+      <div className='max-w-7xl mx-auto px-6 py-4 flex items-center justify-between'>
+        {/* Logo */}
+        <div className={`${textColor} text-2xl font-bold tracking-wider transition-all duration-700 ease-out transform`}>
+          DB Residency
         </div>
         
-        <Link href='/contact'>
-          <button className='bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105'>
-            Contact
-          </button>
-        </Link>
+        {/* Navigation Menu */}
+        <div className='hidden md:flex items-center space-x-8'>
+          <div 
+            className={`flex items-center ${textColor} ${hoverColor} cursor-pointer transition-all duration-700 ease-out transform hover:scale-105`}
+            onClick={handleHomeClick}
+          >
+            <span>Home</span>
+          </div>
+          <div className='relative' ref={dropdownRef}>
+            <div 
+              className={`flex items-center ${textColor} ${hoverColor} cursor-pointer transition-all duration-700 ease-out transform hover:scale-105`}
+              onClick={() => setIsRoomDropdownOpen(!isRoomDropdownOpen)}
+            >
+              <span>Room</span>
+              <svg 
+                className={`w-4 h-4 ml-1 transition-transform duration-200 ${isRoomDropdownOpen ? 'rotate-180' : ''}`} 
+                fill='currentColor' 
+                viewBox='0 0 20 20'
+              >
+                <path fillRule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clipRule='evenodd' />
+              </svg>
+            </div>
+            <div className={`absolute top-full left-0 mt-2 transition-all duration-300 ease-in-out origin-top ${
+              isRoomDropdownOpen 
+                ? 'opacity-100 scale-y-100 translate-y-0' 
+                : 'opacity-0 scale-y-0 -translate-y-2 pointer-events-none'
+            }`}>
+              <ul className='bg-white text-black rounded-lg shadow-lg min-w-48 py-2 border border-gray-100'>
+                <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>Junior Suite</li>
+                <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>Deluxe Double Room</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+        
+        {/* Right side - Language and Book Now */}
+        <div className='flex items-center space-x-4'>
+          <Link href='/contact'>
+            <button className={`${buttonBg} ${buttonText} px-6 py-2 rounded-full text-sm font-medium ${buttonHover} transition-all duration-700 ease-out transform hover:scale-105 hover:shadow-lg flex items-center`}>
+              <svg className='w-4 h-4 mr-2' fill='currentColor' viewBox='0 0 20 20'>
+                <path fillRule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z' clipRule='evenodd' />
+              </svg>
+              CONTACT NOW
+            </button>
+          </Link>
+        </div>
       </div>
     </nav>
   )
