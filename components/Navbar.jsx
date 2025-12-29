@@ -58,7 +58,7 @@ const Navbar = () => {
     <nav className='fixed top-0 left-0 right-0 z-50 '>
       <div className='max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between'>
         <div className='flex items-center'>
-          <Image src={logo} alt='UB Residency Logo' width={80} height={32} className='cursor-pointer md:w-[120px] md:h-[40px]' />
+          <Image src={logo} alt='UB Residency Logo' width={80} height={32} className='cursor-pointer h-[60px]' />
         </div>
         <div className={`${textColor} text-lg md:text-2xl font-bold tracking-wider transition-all duration-700 ease-out transform hidden sm:block`}>
           UB Residency
@@ -104,8 +104,16 @@ const Navbar = () => {
                 : 'opacity-0 scale-y-0 -translate-y-2 pointer-events-none'
             }`}>
               <ul className='bg-white text-black rounded-lg shadow-lg min-w-48 py-2 border border-gray-100'>
-                <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>Junior Suite</li>
-                <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>Deluxe Double Room</li>
+                <li>
+                  <Link href='/room?type=executive' className='block px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>
+                    Executive Suite
+                  </Link>
+                </li>
+                <li>
+                  <Link href='/room?type=Deluxe Room' className='block px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>
+                    Deluxe Room
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -152,8 +160,12 @@ const Navbar = () => {
               </svg>
             </div>
             <div className={`mt-2 ml-4 space-y-2 transition-all duration-200 ${isRoomDropdownOpen ? 'block' : 'hidden'}`}>
-              <div className='text-gray-600 hover:text-gray-800 cursor-pointer py-1'>Junior Suite</div>
-              <div className='text-gray-600 hover:text-gray-800 cursor-pointer py-1'>Deluxe Double Room</div>
+              <Link href='/room?type=executive' onClick={() => setIsMobileMenuOpen(false)}>
+                <div className='text-gray-600 hover:text-gray-800 cursor-pointer py-1'>Executive Suite</div>
+              </Link>
+              <Link href='/room?type=Deluxe Room' onClick={() => setIsMobileMenuOpen(false)}>
+                <div className='text-gray-600 hover:text-gray-800 cursor-pointer py-1'>Deluxe Room</div>
+              </Link>
             </div>
           </div>
           <Link href='/contact' onClick={() => setIsMobileMenuOpen(false)}>

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import executive from '../assets/executive/executive1.png'
 import delux from '../assets/delux/delux.png'
 const suiteData = {
@@ -110,9 +111,11 @@ const Explore = () => {
               </div>
             </div>
             
-            <button className='border border-blue-500 text-blue-500 px-6 py-2 rounded-full hover:bg-blue-50 hover:scale-105 transition-all duration-300 delay-200'>
-              ROOM DETAILS →
-            </button>
+            <Link href={`/room?type=${encodeURIComponent(activeTab)}`}>
+              <button className='border border-blue-500 text-blue-500 px-6 py-2 rounded-full hover:bg-blue-50 hover:scale-105 transition-all duration-300 delay-200'>
+                ROOM DETAILS →
+              </button>
+            </Link>
           </div>
           
           <div className='relative'>
