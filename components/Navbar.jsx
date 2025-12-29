@@ -9,12 +9,31 @@ const Navbar = () => {
   const [isRoomDropdownOpen, setIsRoomDropdownOpen] = useState(false)
   const [isOverHomepage, setIsOverHomepage] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
   const { isDarkBackground } = useNavbar()
   const dropdownRef = useRef(null)
   const router = useRouter()
   
   const pathname = usePathname()
   const isHomePage = pathname === '/'
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false)
+      } else {
+        setIsVisible(true)
+      }
+      
+      setLastScrollY(currentScrollY)
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
   
   useEffect(() => {
     if (!isHomePage) return
@@ -55,7 +74,9 @@ const Navbar = () => {
   }
    
   return (
-    <nav className='fixed top-0 left-0 right-0 z-50 '>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out transform ${
+      isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+    }`}>
       <div className='max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between'>
         <div className='flex items-center'>
           <Image src={logo} alt='UB Residency Logo' width={80} height={32} className='cursor-pointer h-[60px]' />
@@ -104,16 +125,8 @@ const Navbar = () => {
                 : 'opacity-0 scale-y-0 -translate-y-2 pointer-events-none'
             }`}>
               <ul className='bg-white text-black rounded-lg shadow-lg min-w-48 py-2 border border-gray-100'>
-                <li>
-                  <Link href='/room?type=executive' className='block px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>
-                    Executive Suite
-                  </Link>
-                </li>
-                <li>
-                  <Link href='/room?type=Deluxe Room' className='block px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>
-                    Deluxe Room
-                  </Link>
-                </li>
+                <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>Junior Suite</li>
+                <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-150'>Deluxe Double Room</li>
               </ul>
             </div>
           </div>
@@ -160,12 +173,8 @@ const Navbar = () => {
               </svg>
             </div>
             <div className={`mt-2 ml-4 space-y-2 transition-all duration-200 ${isRoomDropdownOpen ? 'block' : 'hidden'}`}>
-              <Link href='/room?type=executive' onClick={() => setIsMobileMenuOpen(false)}>
-                <div className='text-gray-600 hover:text-gray-800 cursor-pointer py-1'>Executive Suite</div>
-              </Link>
-              <Link href='/room?type=Deluxe Room' onClick={() => setIsMobileMenuOpen(false)}>
-                <div className='text-gray-600 hover:text-gray-800 cursor-pointer py-1'>Deluxe Room</div>
-              </Link>
+              <div className='text-gray-600 hover:text-gray-800 cursor-pointer py-1'>Junior Suite</div>
+              <div className='text-gray-600 hover:text-gray-800 cursor-pointer py-1'>Deluxe Double Room</div>
             </div>
           </div>
           <Link href='/contact' onClick={() => setIsMobileMenuOpen(false)}>
