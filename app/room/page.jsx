@@ -110,7 +110,7 @@ const RoomPage = () => {
   }
   
   return (
-    <div className='min-h-screen bg-white py-8 px-4 mt-16'>
+    <div className='min-h-screen bg-white py-8 px-10 mt-16'>
       <div className='max-w-7xl mx-auto'>
         <div className={`transition-all duration-500 ease-in-out transform ${
           transitionClasses.header

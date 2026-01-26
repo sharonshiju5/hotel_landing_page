@@ -78,10 +78,10 @@ const Navbar = () => {
       isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
     }`}>
       <div className='max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between'>
-        <div className='flex items-center'>
+        <div className='flex items-center' onClick={() => router.push('/')}>
           <Image src={logo} alt='UB Residency Logo' width={80} height={32} className='cursor-pointer h-[60px]' />
         </div>
-        <div className={`${textColor} text-lg md:text-2xl font-bold tracking-wider transition-all duration-700 ease-out transform hidden sm:block`}>
+        <div onClick={() => router.push('/')} className={`${textColor} text-lg md:text-2xl font-bold tracking-wider transition-all duration-700 ease-out transform hidden sm:block`}>
           UB Residency
         </div>
         
