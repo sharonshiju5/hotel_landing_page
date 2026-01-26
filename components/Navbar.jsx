@@ -52,11 +52,11 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isHomePage])
   
-  const textColor = (isHomePage && isOverHomepage) ? 'text-white' : 'text-black'
-  const hoverColor = (isHomePage && isOverHomepage) ? 'hover:text-gray-300' : 'hover:text-gray-600'
-  const buttonBg = (isHomePage && isOverHomepage) ? 'bg-white' : 'bg-black'
-  const buttonText = (isHomePage && isOverHomepage) ? 'text-black' : 'text-white'
-  const buttonHover = (isHomePage && isOverHomepage) ? 'hover:bg-gray-100' : 'hover:bg-gray-800'
+  const textColor = (isHomePage && isOverHomepage && !isMobileMenuOpen) ? 'text-white' : 'text-black'
+  const hoverColor = (isHomePage && isOverHomepage && !isMobileMenuOpen) ? 'hover:text-gray-300' : 'hover:text-gray-600'
+  const buttonBg = (isHomePage && isOverHomepage && !isMobileMenuOpen) ? 'bg-white' : 'bg-black'
+  const buttonText = (isHomePage && isOverHomepage && !isMobileMenuOpen) ? 'text-black' : 'text-white'
+  const buttonHover = (isHomePage && isOverHomepage && !isMobileMenuOpen) ? 'hover:bg-gray-100' : 'hover:bg-gray-800'
   
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -74,7 +74,7 @@ const Navbar = () => {
   }
    
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out transform ${
+    <nav className={`fixed top-0 left-0 right-0 ${!isMobileMenuOpen ? "":"bg-white"} z-50 transition-all duration-500 ease-out transform ${
       isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
     }`}>
       <div className='max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between'>
