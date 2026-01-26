@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
 import Image from 'next/image'
-import bgimg from '../assets/img2.png'
+import bgimg from '../assets/executive/exicutivebed.jpeg'
 import { useNavbar } from '../contexts/NavbarContext'
 
 const UBExplore = () => {
@@ -35,7 +35,7 @@ const UBExplore = () => {
                 <Image
                   src={bgimg}
                   alt="Background Image"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full rounded-2xl object-cover"
                 />
 
               </div>

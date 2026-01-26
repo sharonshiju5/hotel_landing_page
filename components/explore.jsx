@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import executive from '../assets/executive/executive1.png'
+import executive from '../assets/executive/exicutivebed.jpeg'
 import delux from '../assets/delux/delux.png'
 const suiteData = {
   'executive': {
